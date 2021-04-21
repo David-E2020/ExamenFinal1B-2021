@@ -20,8 +20,9 @@ public class principalDocenteMateria {
             System.out.println("5. Asignar producto a proveedor");
             System.out.println("6. Mostrar productos de un proveedor");
             System.out.println("7. Realizar la compra de un producto");
-            System.out.println("8. Mostrar Datos"); 
-            System.out.println("9. salir");
+            System.out.println("8. Salida de producto");
+            System.out.println("9. Mostrar Datos"); 
+            System.out.println("10. salir");
             System.out.println("Digite una opcion");
             opc = leer.nextInt();
             switch (opc) {
@@ -49,6 +50,9 @@ public class principalDocenteMateria {
                     obj.compraProducto();
                     break;
                 case 8:
+                    obj.salidaProducto();
+                    break;
+                case 9:
                     obj.leerClientes();
                     obj.mostrarProveedor();
                     break;

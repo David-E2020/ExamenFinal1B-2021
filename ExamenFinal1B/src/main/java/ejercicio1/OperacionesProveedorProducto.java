@@ -79,32 +79,91 @@ public class OperacionesProveedorProducto {
             System.out.println("Lista de proveedores vacia o producto no registrado");
         }
     }
-    //realizamos la compra de un determinado producto
+    /* *** realizamos la compra de un determinado producto ***
+    *  dado que leche natural puede tener 2 o mas proveedos diferentes como 
+    *       Pil=>leche natural
+    *       delicia=>leche natural
+    *  entonces pregunramos el nombre o razon social del proveedor y despues el nombre del prudocto
+    */
     public void compraProducto(){
         if(ListaProveedor.size()>0){
-            System.out.println("Digite nombre del producto: ");
+            System.out.println("Digite nombre del proveedor: ");
             String nom=leer.nextLine();
-            boolean sw=false;
+            boolean sw=false,sw2=false;
             for(Proveedor prove:ListaProveedor){
-                for(Producto prod:prove.getListaProductos()){
-                    if(prod.getNombreProducto().equalsIgnoreCase(nom)){
-                        sw=true;
-                        System.out.println("producto encontrado!...");
-                        System.out.println("Digite la cantidad a comprar: ");
-                        int cant=leer.nextInt();
-                        if(cant<=prod.getStock()){
-                            prod.setStock(prod.getStock()-cant);
-                            System.out.println("Operacion realizada con exito!...");
-                            guardarObjetos();
-                        }else{
-                            System.out.println("No se cuenta con la cantidad requerida");
-                            System.out.println("Operacion no realizada!...");
+                if(prove.getRazonSocial().equalsIgnoreCase(nom)){
+                    sw=true;
+                    System.out.println("Proveedor encontrado");
+                    System.out.println("Digite el nombre del producto: ");
+                    String nomProd=leer.nextLine();
+                    for(Producto prod:prove.getListaProductos()){
+                        if(prod.getNombreProducto().equalsIgnoreCase(nomProd)){
+                            sw2=true;
+                            System.out.println("Producto encontrado");
+                            System.out.println("Digite la cantidad a comprar: ");
+                            int cant=leer.nextInt();
+                            if(cant>0){
+                                prod.setStock(prod.getStock()+cant);
+                                System.out.println("Operacion realizada con exito!...");
+                                guardarObjetos();
+                            }else{
+                                System.out.println("Dato ingresado no valido");
+                                System.out.println("Operacion no realizada!...");
+                            }
                         }
                     }
-                }
+                }   
             }
             if (!sw) {
                 System.out.println("no se encontro al proveedor");
+            }else if(!sw2){
+                System.out.println("producto no encontrado!..");
+            }
+        }else{
+            System.out.println("Lista de proveedores vacia o producto no registrado");
+        }
+    }
+    
+    /*  *** Realizacon de la simulacion de la salida de productos ***
+    *
+    * dado que leche natural puede tener 2 o mas proveedos diferentes como 
+    *       Pil=>leche natural
+    *       delicia=>leche natural
+    * entonces pregunramos el nombre o razon social del proveedor y despues el nombre del prudocto
+    */
+    public void salidaProducto(){
+        if(ListaProveedor.size()>0){
+            System.out.println("Digite nombre del proveedor: ");
+            String nom=leer.nextLine();
+            boolean sw=false,sw2=false;
+            for(Proveedor prove:ListaProveedor){
+                if(prove.getRazonSocial().equalsIgnoreCase(nom)){
+                    sw=true;
+                    System.out.println("Proveedor encontrado");
+                    System.out.println("Digite el nombre del producto: ");
+                    String nomProd=leer.nextLine();
+                    for(Producto prod:prove.getListaProductos()){
+                        if(prod.getNombreProducto().equalsIgnoreCase(nomProd)){
+                            sw2=true;
+                            System.out.println("Producto encontrado");
+                            System.out.println("Digite la cantodad de salida de producto: ");
+                            int cant=leer.nextInt();
+                            if(cant<=prod.getStock()){
+                                prod.setStock(prod.getStock()-cant);
+                                System.out.println("Operacion realizada con exito!...");
+                                guardarObjetos();
+                            }else{
+                                System.out.println("La cantidad requerida es mayor a la cantidad en el stock");
+                                System.out.println("Operacion no realizada!...");
+                            }
+                        }
+                    }
+                }   
+            }
+            if (!sw) {
+                System.out.println("no se encontro al proveedor");
+            }else if(!sw2){
+                System.out.println("producto no encontrado!..");
             }
         }else{
             System.out.println("Lista de proveedores vacia o producto no registrado");
@@ -132,7 +191,7 @@ public class OperacionesProveedorProducto {
     }
     
     public void asignarProductoProveedor(){
-        if(ListaProveedor.size()>0 && producto!=null){
+        if(ListaProveedor.size()>0 && producto!=null && producto.getStock()>0){
             System.out.println("Digite razon social del proveedor: ");
             String nom=leer.nextLine();
             boolean sw=false;
@@ -149,6 +208,7 @@ public class OperacionesProveedorProducto {
                 System.out.println("no se encontro al proveedor");
             }
         }else{
+            System.out.println("Hubo un error, por favor revise los datos!...");
             System.out.println("Lista de proveedores vacia o producto no registrado");
         }
         
